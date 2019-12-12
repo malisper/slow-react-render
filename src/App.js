@@ -1,25 +1,32 @@
-import React from 'react';
+import _ from 'lodash';
+import React, { useState } from 'react';
 import logo from './logo.svg';
+
 import './App.css';
 
 function App() {
+  const [values, setValues] = useState(_.times(1000, ""));
+
+  function handleValueChange(index, e) {
+    const newValues = values.slice();
+    newValues[index] = e.target.value;
+    setValues(newValues);
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+        {values.map((value, index) => {
+          return (
+            <input
+                style={{width: '100px', margin: '10px', display: 'block'}}
+                key={index}
+                value={value}
+                variant="outlined"
+                onChange={(e) => handleValueChange(index, e)}
+            />
+          );
+        })}
+    </>
   );
 }
 
